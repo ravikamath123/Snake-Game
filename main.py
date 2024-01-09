@@ -23,10 +23,11 @@ clock = pygame.time.Clock()
 font = pygame.font.SysFont("consolas", 40)
 
 # Directions
-UP = (0, -SPACE_SIZE)
-DOWN = (0, SPACE_SIZE)
-LEFT = (-SPACE_SIZE, 0)
-RIGHT = (SPACE_SIZE, 0)
+# Each constant is a tuple representing the change in x and y coordinates corresponding to that direction
+UP = (0, -SPACE_SIZE)           # No change in x-coordinate and decreasing y-coordinate by each SPACE_SIZE
+DOWN = (0, SPACE_SIZE)          # No change in x-coordinate and increasing y-coordinate by each SPACE_SIZE
+LEFT = (-SPACE_SIZE, 0)         # No change in y-coordinate and decreasing x-coordinate by each SPACE_SIZE
+RIGHT = (SPACE_SIZE, 0)         # No change in y-coordinate and increasing x-coordinate by each SPACE_SIZE
 
 def draw_snake(snake):
     for segment in snake:
@@ -46,7 +47,7 @@ def check_collision(snake):
     
     # BUG: logic of collison of the snake with its own body. Need help here.
     for body_part in snake[1:]:
-        if body_part == head:
+        if head == body_part[0] and head == body_part[1]:
             return True
 
     return False
