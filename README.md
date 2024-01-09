@@ -6,5 +6,5 @@
  Also there is a <span style="color: orange;"># BUG</span> in the code, which has been commented out. Would like to get help in this issue.
 
 <b>TODO</b><br>
-- Define a <span style="color: orange;">pause_game()</span> method which will pause the game when <button>SPACE</button> is pressed.
-- Define <span style="color: orange;">restart_game()</span> method which will restart the game when <button>ENTER</button> is pressed.
+- Define a `pause_game()` method which will pause the game when <button>SPACE</button> is pressed.
+- Define `restart_game()` method which will restart the game when <button>ENTER</button> is pressed.
