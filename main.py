@@ -59,6 +59,25 @@ food = (random.randint(0, (GAME_WIDTH // SPACE_SIZE) - 1) * SPACE_SIZE,
 direction = RIGHT
 score = 0
 
+# Pause Game
+def pause_game():
+    paused = True   
+    while paused:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    paused = False
+        
+        window.fill(BACKGROUND_COLOR)
+        pause_text = font.render("PAUSE", True, (255,0,0))
+        window.blit(pause_text, (GAME_WIDTH // 2 - 80, GAME_HEIGHT // 2 - 50))
+        pygame.display.flip()
+        # clock.tick(5)
+
+
 # Main game loop
 while True:
     for event in pygame.event.get():
@@ -66,7 +85,9 @@ while True:
             pygame.quit()
             sys.exit()
         elif event.type == pygame.KEYDOWN:
-            if (event.key == pygame.K_UP or event.key == pygame.K_w) and direction != DOWN:
+            if event.key == pygame.K_SPACE:
+                    pause_game()
+            elif (event.key == pygame.K_UP or event.key == pygame.K_w) and direction != DOWN:
                 direction = UP
             elif (event.key == pygame.K_DOWN or event.key == pygame.K_s) and direction != UP:
                 direction = DOWN
@@ -83,7 +104,7 @@ while True:
     if check_collision(snake):
         # Handle game over
         window.fill(BACKGROUND_COLOR)
-        game_over_text = font.render("Game Over", True, (255, 0, 0))
+        game_over_text = font.render("GAME OVER", True, (255, 0, 0))
         window.blit(game_over_text, (GAME_WIDTH // 2 - 120, GAME_HEIGHT // 2 - 50))
         pygame.display.flip()
         continue
