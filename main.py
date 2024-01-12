@@ -126,7 +126,7 @@ def run_game():
             
             game_over = True
 
-            pygame.time.wait(100)
+            pygame.time.wait(500)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -158,5 +158,6 @@ def run_game():
         clock.tick(SPEED)
 
 # Main game loop
-while True:
-    run_game()
+if __name__ == "__main__":
+    while True:
+        run_game()
