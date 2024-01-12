@@ -79,64 +79,84 @@ def pause_game():
         # clock.tick(5)
 
 # Restart Game
-# def restart_game():
-#     snake = [(i * SPACE_SIZE, 0) for i in range(BODY_PARTS)]
-#     food = (random.randint(0, (GAME_WIDTH // SPACE_SIZE) - 1) * SPACE_SIZE,
-#         random.randint(0, (GAME_HEIGHT // SPACE_SIZE) - 1) * SPACE_SIZE)
-#     direction = RIGHT
-#     score = 0
+def restart_game():
+    global snake, food, direction, score
+    snake = [(i * SPACE_SIZE, 0) for i in range(BODY_PARTS)]
+    food = (random.randint(0, (GAME_WIDTH // SPACE_SIZE) - 1) * SPACE_SIZE,
+        random.randint(0, (GAME_HEIGHT // SPACE_SIZE) - 1) * SPACE_SIZE)
+    direction = RIGHT
+    score = 0
     
+
+# Function to run the game 
+def run_game():
+    global snake, food, direction, score
+    game_over = False
+
+    while not game_over:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                        pause_game()
+                if (event.key == pygame.K_UP or event.key == pygame.K_w) and direction != DOWN:
+                    direction = UP
+                elif (event.key == pygame.K_DOWN or event.key == pygame.K_s) and direction != UP:
+                    direction = DOWN
+                elif (event.key == pygame.K_LEFT or event.key == pygame.K_a) and direction != RIGHT:
+                    direction = LEFT
+                elif (event.key == pygame.K_RIGHT or event.key == pygame.K_d) and direction != LEFT:
+                    direction = RIGHT
+
+        # Move the snake
+        new_head = (snake[0][0] + direction[0], snake[0][1] + direction[1])
+        snake.insert(0, new_head)
+
+        # Check for collisions
+        if check_collision(snake):
+            # Handle game over
+            window.fill(BACKGROUND_COLOR)
+            game_over_text = font.render("GAME OVER", True, (255, 0, 0))
+            window.blit(game_over_text, (GAME_WIDTH // 2 - 120, GAME_HEIGHT // 2 - 50))
+            restart_game_text = font_restart.render("Press Enter to Restart", True, (255, 255, 255))
+            window.blit(restart_game_text, (GAME_WIDTH // 2 - 165, GAME_HEIGHT//2 +50))
+            pygame.display.flip()
+            
+            game_over = True
+
+            pygame.time.wait(100)
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                elif event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
+                    restart_game()
+                    return
+
+
+        # Check if the snake ate the food
+        if snake[0] == food:
+            food = (random.randint(0, (GAME_WIDTH // SPACE_SIZE) - 1) * SPACE_SIZE,
+                    random.randint(0, (GAME_HEIGHT // SPACE_SIZE) - 1) * SPACE_SIZE)
+            # snake.append(snake[-1])
+            score += 1
+        else:
+            snake.pop()
+
+        window.fill(BACKGROUND_COLOR)
+        draw_snake(snake)
+        draw_food(food)
+        pygame.display.flip()
+
+        # Display the score
+        score_text = font.render(f"Score: {score}", True, (255, 255, 255))
+        window.blit(score_text, (10, 10))
+        pygame.display.flip()
+
+        clock.tick(SPEED)
 
 # Main game loop
 while True:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE:
-                    pause_game()
-            elif (event.key == pygame.K_UP or event.key == pygame.K_w) and direction != DOWN:
-                direction = UP
-            elif (event.key == pygame.K_DOWN or event.key == pygame.K_s) and direction != UP:
-                direction = DOWN
-            elif (event.key == pygame.K_LEFT or event.key == pygame.K_a) and direction != RIGHT:
-                direction = LEFT
-            elif (event.key == pygame.K_RIGHT or event.key == pygame.K_d) and direction != LEFT:
-                direction = RIGHT
-
-    # Move the snake
-    new_head = (snake[0][0] + direction[0], snake[0][1] + direction[1])
-    snake.insert(0, new_head)
-
-    # Check for collisions
-    if check_collision(snake):
-        # Handle game over
-        window.fill(BACKGROUND_COLOR)
-        game_over_text = font.render("GAME OVER", True, (255, 0, 0))
-        window.blit(game_over_text, (GAME_WIDTH // 2 - 120, GAME_HEIGHT // 2 - 50))
-        restart_game_text = font_restart.render("Press Enter to Restart", True, (255, 255, 255))
-        window.blit(restart_game_text, (GAME_WIDTH // 2 - 165, GAME_HEIGHT//2 +50))
-        pygame.display.flip()
-        continue
-
-    # Check if the snake ate the food
-    if snake[0] == food:
-        food = (random.randint(0, (GAME_WIDTH // SPACE_SIZE) - 1) * SPACE_SIZE,
-                random.randint(0, (GAME_HEIGHT // SPACE_SIZE) - 1) * SPACE_SIZE)
-        # snake.append(snake[-1])
-        score += 1
-    else:
-        snake.pop()
-
-    window.fill(BACKGROUND_COLOR)
-    draw_snake(snake)
-    draw_food(food)
-    pygame.display.flip()
-
-    # Display the score
-    score_text = font.render(f"Score: {score}", True, (255, 255, 255))
-    window.blit(score_text, (10, 10))
-    pygame.display.flip()
-
-    clock.tick(SPEED)
+    run_game()
