@@ -3,6 +3,9 @@
 
  You can use `W` `A` `S` `D` or <button>&uarr;</button> <button>&larr;</button> <button>&darr;</button> <button>&rarr;</button> to move the snake in different directions.
  
+ The game runs better in Ubuntu. Install `pygame` in by using the following package<br>
+ ```sudo apt-get install python3-pygame```
+
 
 <b>TODO</b><br>
 - [ ] There is a `BUG` in the code. It has been commented out. Would like to get help with this issue.
