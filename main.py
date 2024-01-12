@@ -21,6 +21,7 @@ pygame.display.set_caption("Snake Game")
 clock = pygame.time.Clock()
 
 font = pygame.font.SysFont("consolas", 40)
+font_restart = pygame.font.SysFont("consolas", 25)
 
 # Directions
 # Each constant is a tuple representing the change in x and y coordinates corresponding to that direction
@@ -77,6 +78,14 @@ def pause_game():
         pygame.display.flip()
         # clock.tick(5)
 
+# Restart Game
+# def restart_game():
+#     snake = [(i * SPACE_SIZE, 0) for i in range(BODY_PARTS)]
+#     food = (random.randint(0, (GAME_WIDTH // SPACE_SIZE) - 1) * SPACE_SIZE,
+#         random.randint(0, (GAME_HEIGHT // SPACE_SIZE) - 1) * SPACE_SIZE)
+#     direction = RIGHT
+#     score = 0
+    
 
 # Main game loop
 while True:
@@ -106,6 +115,8 @@ while True:
         window.fill(BACKGROUND_COLOR)
         game_over_text = font.render("GAME OVER", True, (255, 0, 0))
         window.blit(game_over_text, (GAME_WIDTH // 2 - 120, GAME_HEIGHT // 2 - 50))
+        restart_game_text = font_restart.render("Press Enter to Restart", True, (255, 255, 255))
+        window.blit(restart_game_text, (GAME_WIDTH // 2 - 165, GAME_HEIGHT//2 +50))
         pygame.display.flip()
         continue
 
