@@ -13,5 +13,5 @@
 
 ## TODO<br>
 - [ ] There is a `BUG` in the code. It has been commented out. Would like to get help with this issue.
-- [x] Define a `pause_game()` method which will pause the game when `SPACE` is pressed.
+- [] Define a `pause_game()` method which will pause the game when `SPACE` is pressed.
 - [x] Define `restart_game()` method which will restart the game when `ENTER` is pressed.
